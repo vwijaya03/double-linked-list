@@ -1,5 +1,3 @@
-var util = require('util');
-
 class Node{
     constructor(val){
         this.val = val;
@@ -43,6 +41,7 @@ class DoubleLinkedList {
         } else {
             this.tail = current.prev;
             this.tail.next = null;
+            current.prev = null;
         }
 
         this.length--;
@@ -65,26 +64,13 @@ function StockPicker(arr) {
     return profit
 }
 
-const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (key, value) => {
-        if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-            return;
-        }
-        seen.add(value);
-        }
-        return value;
-    };
-};
-
 const list = new DoubleLinkedList();
 list.push(1);
 list.push(10);
 list.push(100);
-list.pop();
-list.pop();
+// list.pop();
+// list.pop();
 list.pop();
 
-console.log(JSON.stringify(list, getCircularReplacer(), 2));
+console.log(list);
 // console.log(StockPicker([14, 20, 4, 12, 5, 11]));
