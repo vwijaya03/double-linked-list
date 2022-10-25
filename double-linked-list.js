@@ -48,6 +48,27 @@ class DoubleLinkedList {
 
         return current;
     }
+
+    shift() {
+        if (this.length === 0) {
+            return undefined;
+        }
+
+        let oldHead = this.head;
+
+        if (this.length === 1) {
+            this.head = null;
+            this.tail = null;
+        } else {
+            this.head = oldHead.next;
+            this.head.prev = null;
+            oldHead.next = null;
+        }
+
+        this.length--;
+
+        return oldHead;
+    }
 }
         
 
@@ -70,7 +91,7 @@ list.push(10);
 list.push(100);
 // list.pop();
 // list.pop();
-list.pop();
+list.shift();
 
 console.log(list);
 // console.log(StockPicker([14, 20, 4, 12, 5, 11]));
