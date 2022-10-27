@@ -1,5 +1,5 @@
-class Node{
-    constructor(val){
+class Node {
+    constructor(val) {
         this.val = val;
         this.next = null;
         this.prev = null;
@@ -14,6 +14,7 @@ class DoubleLinkedList {
         this.length = 0;
     }
 
+    // tambah item baru di posisi terakhir
     push(val) {
         var newNode = new Node(val);
         if(this.length === 0){
@@ -28,6 +29,7 @@ class DoubleLinkedList {
         return this;
     }
 
+    // hapus item di posisi terakhir
     pop() {
         if (!this.head) {
             return undefined;
@@ -49,6 +51,7 @@ class DoubleLinkedList {
         return current;
     }
 
+    // hapus item di posisi paling awal
     shift() {
         if (this.length === 0) {
             return undefined;
@@ -69,20 +72,24 @@ class DoubleLinkedList {
 
         return oldHead;
     }
-}
-        
 
-function StockPicker(arr) { 
-    let lissf = arr[0]
-    let profit = -1
-    for(let i = 1; i < arr.length; i++) {
-        if(arr[i] > lissf) {
-            profit = Math.max(profit, arr[i] - lissf)
+    // tambah item baru di posisi paling awal
+    unshift(val) {
+        let newNode = new Node(val);
+
+        if (this.length === 0) {
+            this.head = newNode;
+            this.tail = newNode;
         } else {
-            lissf = arr[i]
+            this.head.prev = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
         }
+
+        this.length++;
+
+        return this;
     }
-    return profit
 }
 
 const list = new DoubleLinkedList();
@@ -95,3 +102,18 @@ list.shift();
 
 console.log(list);
 // console.log(StockPicker([14, 20, 4, 12, 5, 11]));
+
+function StockPicker(arr) { 
+    let lissf = arr[0];
+    let profit = -1;
+
+    for(let i = 1; i < arr.length; i++) {
+        if(arr[i] > lissf) {
+            profit = Math.max(profit, arr[i] - lissf);
+        } else {
+            lissf = arr[i];
+        }
+    }
+
+    return profit;
+}
