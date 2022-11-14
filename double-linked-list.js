@@ -5,8 +5,6 @@ class Node {
         this.prev = null;
     }
 }
-
-
 class DoubleLinkedList {
     constructor() {
         this.head = null;
@@ -90,15 +88,90 @@ class DoubleLinkedList {
 
         return this;
     }
+
+    get(index) {
+        if (index < 0 || index >= this.length) return null;
+        let count, current;
+
+        if (index <= this.length/2) {
+            count = 0;
+            current = this.head;
+            
+            while (count !== index) {
+                current = current.next;
+                count++;
+            }
+        } else {
+            count = this.length - 1;
+            current = this.tail;
+
+            while(count !== index) {
+                current = current.prev;
+                count--;
+            }
+        }
+
+        return current;
+    }
+
+    set(index, val) {
+        const node = this.get(index);
+
+        if (node) {
+            node.val = val;
+            return true;
+        }
+
+        return false;
+    }
+
+    insert(index, val) {
+        if(index < 0 || index > this.length) return false;
+        if(index === 0) return this.unshift(val);
+        if(index === this.length) return this.push(val);
+
+        let newNode = new Node(val);
+        let beforeNode = this.get(index-1);
+        let afterNode = beforeNode.next;
+
+        beforeNode.next = newNode;
+        newNode.prev = beforeNode;
+        newNode.next = afterNode;
+        afterNode.prev = newNode;
+
+        this.length++;
+
+        return true;
+    }
+
+    remove(index) {
+        if(index < 0 || index >= this.length) return false;
+        if(index === 0) return this.shift();
+        if(index === this.length-1) return this.pop();
+
+        let removedNode = this.get(index);
+        let beforeNode = removedNode.prev;
+        let afterNode = removedNode.next;
+
+        beforeNode.next = afterNode;
+        afterNode.prev = beforeNode;
+        removedNode.next = null;
+        removedNode.prev = null;
+
+        this.length--;
+        return removedNode;
+    }
 }
 
 const list = new DoubleLinkedList();
 list.push(1);
 list.push(10);
 list.push(100);
+list.insert(1, 1000);
 // list.pop();
 // list.pop();
-list.shift();
+// list.shift();
+list.remove(1);
 
 console.log(list);
 // console.log(StockPicker([14, 20, 4, 12, 5, 11]));
