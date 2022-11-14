@@ -161,6 +161,21 @@ class DoubleLinkedList {
         this.length--;
         return removedNode;
     }
+
+    reverse() {
+        let current = this.head;
+        this.head = this.tail;
+        this.tail = current;
+     
+        while (current) {
+            let next = current.next;
+            let prev = current.prev;
+            current.next = prev;
+            current.prev = next;
+            current = next;
+        }
+        return this;
+    }
 }
 
 const list = new DoubleLinkedList();
